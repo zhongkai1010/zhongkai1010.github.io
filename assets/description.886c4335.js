@@ -1,0 +1,1 @@
+import{_ as n,r as o,o as s,f as l,__tla as _}from"./index.b5253144.js";let t,c=Promise.all([(()=>{try{return _}catch{}})()]).then(async()=>{const a={};function r(f,m){const e=o("BlJsonFormItem");return s(),l(e)}t=n(a,[["render",r]])});export{c as __tla,t as default};
