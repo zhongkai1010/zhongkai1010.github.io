@@ -1,0 +1,1 @@
+import{_ as o}from"./index-DVgbNHPV.js";import{p as n,c as r,o as s,w as a,i as c}from"./index-Cam4GZdG.js";const _={};function f(i,e){const t=o;return s(),r(t,null,{default:a(()=>e[0]||(e[0]=[c("物品分类 ")])),_:1})}const m=n(_,[["render",f]]);export{m as default};

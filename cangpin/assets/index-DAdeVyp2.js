@@ -1,1 +1,0 @@
-import{_ as o}from"./index-BZu7VypJ.js";import{n,c as r,o as s,w as a,h as c}from"./index-BAuDJ1NX.js";const _={};function f(i,e){const t=o;return s(),r(t,null,{default:a(()=>e[0]||(e[0]=[c("供应商管理 ")])),_:1})}const p=n(_,[["render",f]]);export{p as default};
