@@ -1,101 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OneWork Tools UI</title>
-  <script type="module" crossorigin src="/assets/index.b5253144.js"></script>
-  <link rel="stylesheet" href="/assets/index.7b2c5977.css">
-</head>
-
-<body>
-  <div id="app">
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="icon" href="/favicon.ico" />
+    <script>
+      (function () {
+        var metaEl = document.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        var responsive = true;
+        try {
+          responsive = JSON.parse(
+            localStorage.getItem('theme') || '{}'
+          ).responsive;
+        } catch (e) {
+          console.error(e);
+        }
+        if (responsive === false) {
+          metaEl.setAttribute('content', 'width=1200, initial-scale=1.0');
+        } else {
+          metaEl.setAttribute(
+            'content',
+            'width=device-width, initial-scale=1.0'
+          );
+          document.documentElement.style.overflowX = 'hidden';
+        }
+        document.head.appendChild(metaEl);
+        if (navigator.userAgent.includes('WebKit')) {
+          document.documentElement.classList.add('is-webkit');
+        }
+      })();
+    </script>
+    <title>藏品管理系统</title>
     <style>
-      html,
-      body,
-      #app {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        position: relative;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+      .ele-admin-loading {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        grid-gap: 8px;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        transform: rotate(45deg);
+        animation: loadingRotate 1.2s infinite linear;
+        position: fixed;
+        top: calc(50% - 14px);
+        left: calc(50% - 14px);
       }
 
-      .loader,
-      .loader:before,
-      .loader:after {
+      .ele-admin-loading > i {
         border-radius: 50%;
-        width: 2.5em;
-        height: 2.5em;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-        -webkit-animation: loadAnimation 1.8s infinite ease-in-out;
-        animation: loadAnimation 1.8s infinite ease-in-out;
+        background: #1677ff;
       }
 
-      .loader {
-        color: #406eeb;
-        font-size: 10px;
-        margin: 80px auto;
-        position: relative;
-        text-indent: -9999em;
-        transform: translateZ(0);
-        -webkit-animation-delay: -0.16s;
-        animation-delay: -0.16s;
-        top: 0;
-        transform: translate(-50%, 0);
+      .ele-admin-loading > i:nth-child(2) {
+        opacity: 0.7;
       }
 
-      .loader:before,
-      .loader:after {
-        content: "";
-        position: absolute;
-        top: 0;
+      .ele-admin-loading > i:nth-child(3) {
+        opacity: 0.5;
       }
 
-      .loader:before {
-        left: -3.5em;
-        -webkit-animation-delay: -0.32s;
-        animation-delay: -0.32s;
+      .ele-admin-loading > i:nth-child(4) {
+        opacity: 0.3;
       }
 
-      .loader:after {
-        left: 3.5em;
-      }
-
-      @-webkit-keyframes loadAnimation {
-
-        0%,
-        80%,
-        100% {
-          box-shadow: 0 2.5em 0 -1.3em;
-        }
-
-        40% {
-          box-shadow: 0 2.5em 0 0;
-        }
-      }
-
-      @keyframes loadAnimation {
-
-        0%,
-        80%,
-        100% {
-          box-shadow: 0 2.5em 0 -1.3em;
-        }
-
-        40% {
-          box-shadow: 0 2.5em 0 0;
+      @keyframes loadingRotate {
+        to {
+          transform: rotate(405deg);
         }
       }
     </style>
-    <div class="loader"></div>
-  </div>
-  
-</body>
-
+    <script type="module" crossorigin src="/assets/index-CohFp7-Q.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-0YDKa_Ig.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="ele-admin-loading">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+    </div>
+  </body>
 </html>
