@@ -1,0 +1,1 @@
+import{_ as o}from"./index-C5fuAxFq.js";import{n,c as r,o as s,w as a,h as c}from"./index-D0yT1AcU.js";const _={};function f(i,e){const t=o;return s(),r(t,null,{default:a(()=>e[0]||(e[0]=[c("库存藏品")])),_:1})}const p=n(_,[["render",f]]);export{p as default};
