@@ -1,91 +1,727 @@
 <!doctype html>
-<html lang="zh">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
-      http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate"
+      name="description"
+      content="山脊路上背包客 - 全栈开发工程师的个人主页"
     />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
     <link rel="icon" href="/favicon.ico" />
-    <script>
-      (function () {
-        var metaEl = document.createElement('meta');
-        metaEl.setAttribute('name', 'viewport');
-        var responsive = true;
-        try {
-          responsive = JSON.parse(
-            localStorage.getItem('theme') || '{}'
-          ).responsive;
-        } catch (e) {
-          console.error(e);
-        }
-        if (responsive === false) {
-          metaEl.setAttribute('content', 'width=1200, initial-scale=1.0');
-        } else {
-          metaEl.setAttribute(
-            'content',
-            'width=device-width, initial-scale=1.0'
-          );
-          document.documentElement.style.overflowX = 'hidden';
-        }
-        document.head.appendChild(metaEl);
-        if (navigator.userAgent.includes('WebKit')) {
-          document.documentElement.classList.add('is-webkit');
-        }
-      })();
-    </script>
-    <title>藏品管理系统</title>
+    <title>山脊路上背包客 | 全栈开发工程师</title>
     <style>
-      .ele-admin-loading {
-        width: 28px;
-        height: 28px;
-        display: grid;
-        grid-gap: 8px;
-        grid-template-rows: repeat(2, 1fr);
-        grid-template-columns: repeat(2, 1fr);
-        transform: rotate(45deg);
-        animation: loadingRotate 1.2s infinite linear;
-        position: fixed;
-        top: calc(50% - 14px);
-        left: calc(50% - 14px);
+      /* ===== Reset & Base ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      .ele-admin-loading > i {
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --text: #1a1a2e;
+        --text-secondary: #555;
+        --accent: #2d6a4f;
+        --accent-light: #40916c;
+        --border: #e8e8e8;
+        --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+        --max-width: 860px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ===== Layout ===== */
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ===== Navigation ===== */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(250, 250, 250, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      nav .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+      }
+
+      .nav-logo {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* ===== Hero ===== */
+      .hero {
+        padding: 100px 0 72px;
+        text-align: center;
+      }
+
+      .hero-avatar {
+        width: 96px;
+        height: 96px;
         border-radius: 50%;
-        background: #1677ff;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+        color: #fff;
+        margin: 0 auto 28px;
+        font-weight: 700;
+        box-shadow: 0 8px 28px rgba(45, 106, 79, 0.25);
       }
 
-      .ele-admin-loading > i:nth-child(2) {
-        opacity: 0.7;
+      .hero h1 {
+        font-size: 2.6rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+        color: var(--text);
       }
 
-      .ele-admin-loading > i:nth-child(3) {
-        opacity: 0.5;
+      .hero .tagline {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
       }
 
-      .ele-admin-loading > i:nth-child(4) {
-        opacity: 0.3;
+      .hero .location {
+        font-size: 0.9rem;
+        color: #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
       }
 
-      @keyframes loadingRotate {
-        to {
-          transform: rotate(405deg);
+      /* ===== Sections ===== */
+      section {
+        padding: 72px 0;
+      }
+
+      section:nth-child(even) {
+        background: var(--surface);
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 36px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: -0.02em;
+      }
+
+      .section-title::before {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 24px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      /* ===== About ===== */
+      .about-content {
+        display: flex;
+        gap: 48px;
+        align-items: flex-start;
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-text p {
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        font-size: 0.95rem;
+      }
+
+      .about-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      .about-highlights {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        min-width: 240px;
+      }
+
+      .highlight-card {
+        background: var(--bg);
+        border-radius: var(--radius);
+        padding: 20px;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+
+      .highlight-card .number {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .highlight-card .label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 4px;
+      }
+
+      /* ===== Skills ===== */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .skill-category {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        transition: box-shadow 0.2s;
+      }
+
+      .skill-category:hover {
+        box-shadow: var(--shadow);
+      }
+
+      .skill-category h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: var(--accent);
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .skill-tag {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 4px 14px;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        transition: all 0.2s;
+      }
+
+      .skill-tag:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ===== Projects ===== */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .project-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+        transition: all 0.25s;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .project-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
+      }
+
+      .project-icon {
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+
+      .project-card h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .project-card p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        line-height: 1.6;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .project-tech span {
+        font-size: 0.75rem;
+        color: var(--accent);
+        background: rgba(45, 106, 79, 0.08);
+        padding: 2px 10px;
+        border-radius: 12px;
+      }
+
+      /* ===== Contact ===== */
+      .contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 22px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+
+      .contact-link:hover {
+        border-color: var(--accent);
+        box-shadow: var(--shadow);
+      }
+
+      .contact-link .icon {
+        font-size: 1.2rem;
+        width: 24px;
+        text-align: center;
+      }
+
+      /* ===== Footer ===== */
+      footer {
+        text-align: center;
+        padding: 36px 0;
+        border-top: 1px solid var(--border);
+        color: #999;
+        font-size: 0.82rem;
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 640px) {
+        .hero {
+          padding: 72px 0 48px;
         }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .about-content {
+          flex-direction: column;
+          gap: 32px;
+        }
+        .about-highlights {
+          grid-template-columns: repeat(3, 1fr);
+          min-width: unset;
+        }
+        .nav-links {
+          gap: 16px;
+        }
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .contact-links {
+          flex-direction: column;
+        }
+        section {
+          padding: 48px 0;
+        }
+      }
+
+      /* ===== Animations ===== */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.6s ease-out both;
+      }
+
+      .fade-in:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .fade-in:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .fade-in:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+
+      /* ===== Button Reset ===== */
+      button.contact-link {
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      /* ===== QR Modal ===== */
+      .qr-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+
+      .qr-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .qr-modal {
+        background: #fff;
+        border-radius: var(--radius);
+        padding: 32px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        animation: modalIn 0.3s ease-out;
+      }
+
+      @keyframes modalIn {
+        from {
+          transform: scale(0.9) translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .qr-modal img {
+        width: 200px;
+        height: 200px;
+        border-radius: 8px;
+        display: block;
+      }
+
+      .qr-modal p {
+        margin-top: 14px;
+        color: var(--text-secondary);
+        font-size: 0.88rem;
+      }
+
+      .qr-close {
+        position: absolute;
+        top: 8px;
+        right: 14px;
+        background: none;
+        border: none;
+        font-size: 1.6rem;
+        color: #999;
+        cursor: pointer;
+        line-height: 1;
+        padding: 4px;
+        transition: color 0.15s;
+      }
+
+      .qr-close:hover {
+        color: #333;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-DuSeLP2O.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D4zNpVkW.css">
   </head>
   <body>
-    <div id="app">
-      <div class="ele-admin-loading">
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
+    <!-- Navigation -->
+    <nav>
+      <div class="container">
+        <a href="#" class="nav-logo">ZK</a>
+        <ul class="nav-links">
+          <li><a href="#about">关于</a></li>
+          <li><a href="#skills">技能</a></li>
+          <li><a href="#projects">项目</a></li>
+          <li><a href="#contact">联系</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="container">
+        <div class="hero-avatar">🎒</div>
+        <h1>山脊路上背包客</h1>
+        <p class="tagline">全栈开发工程师</p>
+        <p class="location">📍 长沙</p>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">关于我</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              你好！我是一名热爱技术的全栈开发工程师，专注于构建优雅、高性能的
+              Web 应用。
+              从前端交互到后端架构，从数据库设计到部署运维，我享受用代码解决问题的每一个环节。
+            </p>
+            <p>
+              工作之余，我喜欢探索新技术、参与开源项目，也喜欢徒步旅行——
+              正如我的名字"山脊路上背包客"，我相信写代码和爬山一样，最美的风景总在坚持之后。
+            </p>
+            <p>目前我正在寻找有趣的项目机会，如果你有好的想法，欢迎联系我！</p>
+          </div>
+          <div class="about-highlights">
+            <div class="highlight-card fade-in">
+              <div class="number">5+</div>
+              <div class="label">年开发经验</div>
+            </div>
+            <div class="highlight-card fade-in">
+              <div class="number">20+</div>
+              <div class="label">完成项目</div>
+            </div>
+            <div class="highlight-card fade-in">
+              <div class="number">10+</div>
+              <div class="label">掌握技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">技术技能</h2>
+        <div class="skills-grid">
+          <div class="skill-category fade-in">
+            <h3>前端开发</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Vue</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Next.js</span>
+              <span class="skill-tag">Tailwind CSS</span>
+              <span class="skill-tag">HTML/CSS</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in">
+            <h3>后端开发</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">Go</span>
+              <span class="skill-tag">RESTful API</span>
+              <span class="skill-tag">GraphQL</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in">
+            <h3>数据库 & 运维</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">Redis</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Linux</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">项目作品</h2>
+        <div class="projects-grid">
+          <a
+            class="project-card fade-in"
+            href="https://github.com/zhongkai1010"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project-icon">📦</div>
+            <h3>藏品管理系统</h3>
+            <p>
+              一个功能完善的藏品管理与展示平台，支持分类、检索和数据可视化。
+            </p>
+            <div class="project-tech">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MySQL</span>
+            </div>
+          </a>
+          <a
+            class="project-card fade-in"
+            href="https://github.com/zhongkai1010"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project-icon">🔧</div>
+            <h3>项目名称二</h3>
+            <p>在这里描述你的第二个项目，包括它的主要功能和亮点。</p>
+            <div class="project-tech">
+              <span>Vue</span>
+              <span>Python</span>
+              <span>Docker</span>
+            </div>
+          </a>
+          <a
+            class="project-card fade-in"
+            href="https://github.com/zhongkai1010"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="project-icon">🚀</div>
+            <h3>项目名称三</h3>
+            <p>在这里描述你的第三个项目，展示你的技术广度和深度。</p>
+            <div class="project-tech">
+              <span>TypeScript</span>
+              <span>Go</span>
+              <span>PostgreSQL</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">联系方式</h2>
+        <div class="contact-links">
+          <a
+            class="contact-link fade-in"
+            href="https://github.com/zhongkai1010"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="icon">💻</span>
+            <span>GitHub</span>
+          </a>
+          <a class="contact-link fade-in" href="mailto:zhongkai1010@163.com">
+            <span class="icon">✉️</span>
+            <span>Email</span>
+          </a>
+          <a
+            class="contact-link fade-in"
+            href="https://zhongkai1010.github.io/"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="icon">📝</span>
+            <span>博客</span>
+          </a>
+          <button class="contact-link fade-in" id="wechatBtn">
+            <span class="icon">💬</span>
+            <span>微信</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- WeChat QR Modal -->
+    <div class="qr-overlay" id="qrOverlay">
+      <div class="qr-modal">
+        <button class="qr-close" id="qrClose">&times;</button>
+        <img src="assets/wechat-qrcode.png" alt="微信二维码" />
+        <p>扫码添加微信</p>
+        <p style="font-size: 0.8rem; color: #999; margin-top: 4px">
+          微信号：hn279408212
+        </p>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2026 山脊路上背包客. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      var overlay = document.getElementById("qrOverlay");
+      document
+        .getElementById("wechatBtn")
+        .addEventListener("click", function () {
+          overlay.classList.add("show");
+        });
+      document.getElementById("qrClose").addEventListener("click", function () {
+        overlay.classList.remove("show");
+      });
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) overlay.classList.remove("show");
+      });
+    </script>
   </body>
 </html>
